@@ -1,0 +1,73 @@
+version: '3.5'
+services:
+  api:
+    container_name: api_panda
+    image: api_panda:develop
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+      args:
+        requirements: dev
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    links:
+      - postgres:postgres
+    networks:
+      - api_panda
+    depends_on:
+      - migration
+      - postgres
+
+  collectstatic:
+    container_name: collectstatic
+    image: api_panda:develop
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+      args:
+        requirements: dev
+    command: python manage.py collectstatic --noinput
+    volumes:
+      - .:/app
+    networks:
+      - api_panda
+    depends_on:
+      - postgres
+
+  migration:
+    container_name: migration
+    image: api_panda:develop
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+      args:
+        requirements: dev
+    command: python manage.py migrate
+    volumes:
+      - .:/app
+    networks:
+      - api_panda
+    depends_on:
+      - postgres
+
+  postgres:
+    container_name: postgres
+    image: postgres:10.7
+    environment:
+      - POSTGRES_USER=panda_user
+      - POSTGRES_DB=Teste
+      - POSTGRES_PASSWORD=Teste123
+    volumes:
+      - .:/app
+    ports:
+      - 5432:5432
+    networks:
+      - api_panda
+
+networks:
+  api_panda:
+    external:
+      name: api_panda
