@@ -7,14 +7,14 @@ ENV DOTENV_PATH /app/.env
 ENV DJANGO_SETTINGS_MODULE=pandaapi.settings.prod
 
 # Copia o codigo para /app
-COPY conf/docker /app
+COPY . /app
 WORKDIR /app
 
 # Instala dependencias
 RUN apt update && apt install -y git $(cat conf/requirements/apt-get-dependencies.txt)
 
 # Instala requisitos
-RUN pip install -r conf/requirements/${requirements}.txt
+RUN pip install -r conf/requirements/prod.txt
 RUN touch .env
 
 ### Limpa cache .deb

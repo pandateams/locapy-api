@@ -32,4 +32,5 @@ class CloudinaryApi:
         response = {'url': request['url']}
         return response
 
+
 cloudyapi = CloudinaryApi()

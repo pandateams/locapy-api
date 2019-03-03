@@ -1,4 +1,3 @@
-import django_heroku
 
 from .base import *
 
@@ -11,6 +10,3 @@ RAVEN_CONFIG = {
     'dsn': config('SENTRY_DSN'),
     'environment': 'prod',
 }
-
-# Activate Django-Heroku.
-django_heroku.settings(locals())
