@@ -10,9 +10,6 @@ ENV DJANGO_SETTINGS_MODULE=pandaapi.settings.prod
 COPY . /app
 WORKDIR /app
 
-# Instala dependencias
-RUN apt update && apt install -y git $(cat conf/requirements/apt-get-dependencies.txt)
-
 # Instala requisitos
 RUN pip install -r conf/requirements/prod.txt
 RUN touch .env

@@ -1,9 +1,0 @@
-apt-utils
-default-libmysqlclient-dev
-build-essential
-default-libmysqlclient-dev
-libyajl2
-locales-all
-libffi-dev
-libssl-dev
-swig

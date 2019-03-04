@@ -44,6 +44,7 @@ REQUIREMENTS_APPS = [
     'django.contrib.staticfiles',
     # Apps de terceiros
     'rest_framework',
+    'django_filters',
     'cloudinary',
     'raven.contrib.django.raven_compat',
 ]
@@ -140,5 +141,3 @@ STATIC_URL = '/static/'
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
-
-
