@@ -1,1 +1,1 @@
-web: gunicorn pandaapi.wsgi --log-file -
+web: gunicorn locapy.wsgi --log-file -

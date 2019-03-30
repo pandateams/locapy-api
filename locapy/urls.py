@@ -1,4 +1,4 @@
-"""pandaapi URL Configuration
+"""locapy URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.1/topics/http/urls/
@@ -17,13 +17,12 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-from apps.appexemplo.api.viewsets import ExampleViewSet
 
 router = routers.DefaultRouter()
-router.register(r'exemplo', ExampleViewSet)
+# router.register('',)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path(r'', include(router.urls)),
-    path(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

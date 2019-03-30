@@ -4,7 +4,7 @@ FROM python:3.7.2-slim-stretch
 ARG requirements="dev"
 ENV PYTHONUNBUFFERED 1
 ENV DOTENV_PATH /app/.env
-ENV DJANGO_SETTINGS_MODULE=pandaapi.settings.dev
+ENV DJANGO_SETTINGS_MODULE=locapy.settings.dev
 
 # Copia o codigo para /app
 COPY . /app
