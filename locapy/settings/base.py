@@ -47,6 +47,7 @@ REQUIREMENTS_APPS = [
     'django_filters',
     'cloudinary',
     'raven.contrib.django.raven_compat',
+    'django_extensions',
 ]
 
 PROJECT_APPS = [

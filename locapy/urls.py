@@ -17,12 +17,14 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
+from apps.locador.api.viewsets import LocadorViewSet, LocadorViewSetSoft
 
 router = routers.DefaultRouter()
-# router.register('',)
+router.register('cadastro/locador', LocadorViewSet, base_name='Cadastro Locador')
+router.register('locador', LocadorViewSetSoft, base_name='Locador')
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', include(router.urls)),
+    path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

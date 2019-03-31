@@ -1,10 +1,28 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django_extensions.db.models import TimeStampedModel
 
 
-class Perfil(models.Model):
+class Perfil(TimeStampedModel):
+    """
+    Model de Perfil
+    ---
+    bloqueado:
+
+    foto:
+
+    termos_de_uso:
+
+    usuario:
+
+    created: datetime
+        Data de criação do perfil, gerado automaticamente pela herança de TimeStampedModel
+
+    modified: datetime
+        Data de modificação do perfil, gerado automaticamente pela herança de TimeStampedModel
+
+    """
     bloqueado = models.BooleanField(default=False)
-    ativo = models.BooleanField(default=True)
     foto = models.CharField(max_length=100, blank=True, null=True)
     termos_de_uso = models.BooleanField(default=False)
     usuario = models.OneToOneField(to=User, on_delete=models.CASCADE)
