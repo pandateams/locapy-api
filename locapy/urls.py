@@ -17,11 +17,13 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
+from apps.autenticacao.api.viewsets import UserViewSet
 from apps.locador.api.viewsets import LocadorViewSet, LocadorViewSetSoft
 
 router = routers.DefaultRouter()
 router.register('cadastro/locador', LocadorViewSet, base_name='Cadastro Locador')
 router.register('locador', LocadorViewSetSoft, base_name='Locador')
+router.register('usuario', UserViewSet, base_name='Usuario')
 
 urlpatterns = [
     path('', include(router.urls)),
