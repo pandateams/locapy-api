@@ -19,8 +19,6 @@ class Locador(TimeStampedModel):
 
     telefone:
 
-    plano:
-
     perfil:
 
     created: datetime
@@ -36,8 +34,6 @@ class Locador(TimeStampedModel):
     cnpj = models.CharField(max_length=15, null=True, blank=True, unique=True)
     endereco = models.CharField(max_length=200, blank=True, null=True)
     telefone = models.CharField(max_length=11, blank=True, null=True)
-    plano = models.ForeignKey(to='autenticacao.Plano', related_name="plano_locador", on_delete=models.DO_NOTHING,
-                              blank=True, null=True)
     perfil = models.ForeignKey(to='autenticacao.Perfil', related_name="perfil_locador", on_delete=models.CASCADE,
                                blank=False, null=False)
 

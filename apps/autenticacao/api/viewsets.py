@@ -27,6 +27,18 @@ class UserViewSet(ModelViewSet):
 
     @action(methods=['get'], detail=False)
     def busca_username(self, request):
+        """
+        Action que busca o username
+
+        Parameters
+        ----------
+        request
+
+        Returns
+        -------
+        Usuario serializado ou um objeto vazio
+
+        """
         try:
             query = User.objects.get(username__iexact=request.query_params['username'])
             user = UserSerializer(query)
@@ -38,6 +50,18 @@ class UserViewSet(ModelViewSet):
 
     @action(methods=['get'], detail=False)
     def busca_email(self, request):
+        """
+        Action que busca o email
+
+        Parameters
+        ----------
+        request
+
+        Returns
+        -------
+        Usuario serializado ou um objeto vazio
+
+        """
         try:
             query = User.objects.get(email__exact=request.query_params['email'])
             user = UserSerializer(query)

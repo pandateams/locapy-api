@@ -19,11 +19,15 @@ from rest_framework import routers
 
 from apps.autenticacao.api.viewsets import UserViewSet
 from apps.locador.api.viewsets import LocadorViewSet, LocadorViewSetSoft
+from apps.locatario.api.viewsets import LocatarioViewSet, LocatarioViewSetSoft
 
 router = routers.DefaultRouter()
-router.register('cadastro/locador', LocadorViewSet, base_name='Cadastro Locador')
-router.register('locador', LocadorViewSetSoft, base_name='Locador')
 router.register('usuario', UserViewSet, base_name='Usuario')
+router.register('cadastro/locador', LocadorViewSet, base_name='Cadastro Locador')
+router.register('cadastro/locatario', LocatarioViewSet, base_name='Cadastro Locatario')
+router.register('locador', LocadorViewSetSoft, base_name='Locador')
+router.register('locatario', LocatarioViewSetSoft, base_name='Locatario')
+
 
 urlpatterns = [
     path('', include(router.urls)),
