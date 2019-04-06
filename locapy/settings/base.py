@@ -54,6 +54,7 @@ PROJECT_APPS = [
     # Minhas apps
     'apps.autenticacao',
     'apps.locador',
+    'apps.main',
 ]
 
 INSTALLED_APPS = REQUIREMENTS_APPS + PROJECT_APPS

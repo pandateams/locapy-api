@@ -11,6 +11,7 @@ COPY . /app
 WORKDIR /app
 
 # Instala requisitos
+RUN apt update && apt install -y git $(cat conf/apt-get-dependencies.txt)
 RUN pip install -r conf/requirements/prod.txt
 RUN touch .env
 
