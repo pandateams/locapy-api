@@ -1,8 +1,8 @@
-from apps.autenticacao.models import User
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
 from apps.autenticacao.models import Perfil, Plano
+from apps.autenticacao.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -35,7 +35,6 @@ class PerfilSerializer(serializers.ModelSerializer):
 
 
 class PerfilSerializerSoft(serializers.ModelSerializer):
-
     class Meta:
         model = Perfil
         fields = ('id', 'usuario')

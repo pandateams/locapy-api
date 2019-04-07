@@ -1,3 +1,4 @@
+from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ModelViewSet
 
 from apps.locatario.api.serializers import LocatarioSerializer, LocatarioSerializerSoft
@@ -9,7 +10,7 @@ class LocatarioViewSet(ModelViewSet):
     Viewset responsavel pelo Locatario
     """
     serializer_class = LocatarioSerializer
-    permission_classes = ()
+    permission_classes = (AllowAny,)
 
     def get_queryset(self):
         """
@@ -27,7 +28,7 @@ class LocatarioViewSetSoft(ModelViewSet):
     Viewset responsavel pelo Locatario
     """
     serializer_class = LocatarioSerializerSoft
-    permission_classes = ()
+    permission_classes = (AllowAny,)
 
     def get_queryset(self):
         """

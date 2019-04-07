@@ -1,3 +1,4 @@
+from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ModelViewSet
 
 from apps.locador.api.serializers import LocadorSerializer, LocadorSerializerSoft
@@ -9,7 +10,7 @@ class LocadorViewSet(ModelViewSet):
     Viewset mais completa responsavel pelo locador
     """
     serializer_class = LocadorSerializer
-    permission_classes = ()
+    permission_classes = (AllowAny,)
 
     def get_queryset(self):
         """
@@ -28,7 +29,7 @@ class LocadorViewSetSoft(ModelViewSet):
     Viewset mais simples responsavel pelo locador
     """
     serializer_class = LocadorSerializerSoft
-    permission_classes = ()
+    permission_classes = (AllowAny,)
 
     def get_queryset(self):
         """

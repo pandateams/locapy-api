@@ -1,9 +1,9 @@
-from apps.autenticacao.models import User
 from rest_framework import serializers, status
 from rest_framework.response import Response
 
 from apps.autenticacao.api.serializers import PerfilSerializer
 from apps.autenticacao.models import Perfil
+from apps.autenticacao.models import User
 from apps.locador.models import Locador
 
 

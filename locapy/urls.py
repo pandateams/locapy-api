@@ -30,7 +30,6 @@ router.register('cadastro/locatario', LocatarioViewSet, base_name='Cadastro Loca
 router.register('locador', LocadorViewSetSoft, base_name='Locador')
 router.register('locatario', LocatarioViewSetSoft, base_name='Locatario')
 
-
 urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),

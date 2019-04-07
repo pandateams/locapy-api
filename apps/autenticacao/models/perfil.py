@@ -1,6 +1,7 @@
 from django.db import models
-from .user import User
 from django_extensions.db.models import TimeStampedModel
+
+from .user import User
 
 
 class Perfil(TimeStampedModel):
