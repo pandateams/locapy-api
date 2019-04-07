@@ -1,11 +1,11 @@
-from django.contrib.auth.models import User
+from apps.autenticacao.models import User, Perfil
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from apps.autenticacao.api.serializers import UserSerializer
+from apps.autenticacao.api.serializers import UserSerializer, PerfilSerializer, PerfilSerializerSoft
 
 
 class UserViewSet(ModelViewSet):
@@ -70,3 +70,39 @@ class UserViewSet(ModelViewSet):
             return Response({}, status.HTTP_404_NOT_FOUND)
         except Exception:
             return Response({}, status.HTTP_400_BAD_REQUEST)
+
+
+class PerfilViewSet(ModelViewSet):
+    """
+    Viewset responsavel pelo perfil dos usuarios
+    """
+    serializer_class = PerfilSerializer
+    permission_classes = ()
+
+    def get_queryset(self):
+        """
+        Função que filtra os perfis de usuario com o objeto de usuario
+
+        Returns
+        -------
+        Lista de perfis de usuario
+        """
+        return Perfil.objects.all()
+
+
+class PerfilViewSetSoft(ModelViewSet):
+    """
+    Viewset responsavel pelo perfil dos usuarios com apenas informações do perfil
+    """
+    serializer_class = PerfilSerializerSoft
+    permission_classes = ()
+
+    def get_queryset(self):
+        """
+        Função que filtra os perfis de usuario
+
+        Returns
+        -------
+        Lista de perfis de usuario
+        """
+        return Perfil.objects.all()

@@ -17,12 +17,14 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-from apps.autenticacao.api.viewsets import UserViewSet
+from apps.autenticacao.api.viewsets import UserViewSet, PerfilViewSetSoft, PerfilViewSet
 from apps.locador.api.viewsets import LocadorViewSet, LocadorViewSetSoft
 from apps.locatario.api.viewsets import LocatarioViewSet, LocatarioViewSetSoft
 
 router = routers.DefaultRouter()
 router.register('usuario', UserViewSet, base_name='Usuario')
+router.register('perfil', PerfilViewSetSoft, base_name='Perfil')
+router.register('perfil-usuario', PerfilViewSet, base_name='Perfil Usuario')
 router.register('cadastro/locador', LocadorViewSet, base_name='Cadastro Locador')
 router.register('cadastro/locatario', LocatarioViewSet, base_name='Cadastro Locatario')
 router.register('locador', LocadorViewSetSoft, base_name='Locador')
