@@ -1,14 +1,14 @@
 version: '3.5'
 services:
   api:
-    container_name: api_panda
-    image: api_panda:prod
+    container_name: locapy_api
+    image: locapy_api:prod
     build:
       context: .
       dockerfile: Dockerfile
       args:
         requirements: prod
-    command: gunicorn --env DJANGO_SETTINGS_MODULE=pandaapi.settings.prod pandaapi.wsgi:application
+    command: gunicorn --env DJANGO_SETTINGS_MODULE=locapy.settings.prod locapy.wsgi:application
     volumes:
       - .:/app
     ports:
@@ -16,14 +16,14 @@ services:
     links:
       - postgres:postgres
     networks:
-      - api_panda
+      - locapy_api
     depends_on:
       - migration
       - postgres
 
   collectstatic:
     container_name: collectstatic
-    image: api_panda:prod
+    image: locapy_api:prod
     build:
       context: .
       dockerfile: Dockerfile
@@ -33,13 +33,13 @@ services:
     volumes:
       - .:/app
     networks:
-      - api_panda
+      - locapy_api
     depends_on:
       - postgres
 
   migration:
     container_name: migration
-    image: api_panda:prod
+    image: locapy_api:prod
     build:
       context: .
       dockerfile: Dockerfile
@@ -49,7 +49,7 @@ services:
     volumes:
       - .:/app
     networks:
-      - api_panda
+      - locapy_api
     depends_on:
       - postgres
 
@@ -65,9 +65,9 @@ services:
     ports:
       - 5432:5432
     networks:
-      - api_panda
+      - locapy_api
 
 networks:
-  api_panda:
+  locapy_api:
     external:
-      name: api_panda
+      name: locapy_api

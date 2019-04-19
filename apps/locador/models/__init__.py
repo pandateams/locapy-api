@@ -1,0 +1,1 @@
+from .locador import Locador
