@@ -1,5 +1,7 @@
+from django.core.validators import RegexValidator
 from rest_framework import serializers, status
 from rest_framework.response import Response
+from rest_framework.validators import UniqueValidator
 
 from apps.autenticacao.api.serializers import PerfilSerializer
 from apps.autenticacao.models import Perfil
@@ -8,10 +10,24 @@ from apps.locatario.models import Locatario
 
 
 class LocatarioSerializerSoft(serializers.ModelSerializer):
+
+    cpf = serializers.RegexField(
+        regex="([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})",
+        required=True,
+        max_length=11,
+        min_length=11,
+        allow_blank=False,
+        validators=[
+            UniqueValidator(queryset=Locatario.objects.all()),
+            RegexValidator(
+                regex="([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})")
+        ]
+    )
+
     class Meta:
         model = Locatario
         fields = (
-            'nome', 'cpf', 'telefone', 'logradouro', 'numero', 'bairro',
+            'id', 'nome', 'cpf', 'telefone', 'logradouro', 'numero', 'bairro',
             'cidade', 'estado', 'data_nasc', 'ativo', 'perfil'
         )
 
@@ -19,10 +35,23 @@ class LocatarioSerializerSoft(serializers.ModelSerializer):
 class LocatarioSerializer(serializers.ModelSerializer):
     perfil = PerfilSerializer()
 
+    cpf = serializers.RegexField(
+        regex="([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})",
+        required=True,
+        max_length=11,
+        min_length=11,
+        allow_blank=False,
+        validators=[
+            UniqueValidator(queryset=Locatario.objects.all()),
+            RegexValidator(
+                regex="([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})")
+        ]
+    )
+
     class Meta:
         model = Locatario
         fields = (
-            'nome', 'cpf', 'telefone', 'logradouro', 'numero', 'bairro',
+            'id', 'nome', 'cpf', 'telefone', 'logradouro', 'numero', 'bairro',
             'cidade', 'estado', 'data_nasc', 'ativo', 'perfil'
         )
 
