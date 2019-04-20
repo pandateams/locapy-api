@@ -1,5 +1,7 @@
+from django.core.validators import RegexValidator
 from rest_framework import serializers, status
 from rest_framework.response import Response
+from rest_framework.validators import UniqueValidator
 
 from apps.autenticacao.api.serializers import PerfilSerializer
 from apps.autenticacao.models import Perfil
@@ -9,6 +11,18 @@ from apps.locador.models import Locador
 
 class LocadorSerializer(serializers.ModelSerializer):
     perfil = PerfilSerializer()
+
+    cnpj = serializers.RegexField(
+        regex="([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})",
+        required=True,
+        max_length=14,
+        min_length=14,
+        allow_blank=False,
+        validators=[
+            UniqueValidator(queryset=Locador.objects.all()),
+            RegexValidator(regex="([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})")
+        ]
+    )
 
     class Meta:
         model = Locador
@@ -41,6 +55,19 @@ class LocadorSerializer(serializers.ModelSerializer):
 
 
 class LocadorSerializerSoft(serializers.ModelSerializer):
+
+    cnpj = serializers.RegexField(
+        regex="([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})",
+        required=True,
+        max_length=14,
+        min_length=14,
+        allow_blank=False,
+        validators=[
+            UniqueValidator(queryset=Locador.objects.all()),
+            RegexValidator(regex="([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})")
+        ]
+    )
+
     class Meta:
         model = Locador
         fields = ('id', 'nome_fantasia', 'razao_social', 'inscricao_estadual', 'cnpj', 'endereco', 'telefone',
