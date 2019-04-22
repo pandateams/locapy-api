@@ -6,6 +6,7 @@ from rest_framework.validators import UniqueValidator
 from apps.autenticacao.api.serializers import PerfilSerializer
 from apps.autenticacao.models import Perfil
 from apps.autenticacao.models import User
+from apps.email.logica import envia_email_bemvindo
 from apps.locatario.models import Locatario
 
 

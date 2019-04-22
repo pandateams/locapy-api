@@ -3,6 +3,7 @@ from rest_framework.validators import UniqueValidator
 
 from apps.autenticacao.models import Perfil, Plano
 from apps.autenticacao.models import User
+from apps.email.logica import envia_email_bemvindo
 
 
 class UserSerializer(serializers.ModelSerializer):

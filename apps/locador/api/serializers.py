@@ -6,6 +6,7 @@ from rest_framework.validators import UniqueValidator
 from apps.autenticacao.api.serializers import PerfilSerializer
 from apps.autenticacao.models import Perfil
 from apps.autenticacao.models import User
+from apps.email.logica import envia_email_bemvindo
 from apps.locador.models import Locador
 
 
@@ -48,7 +49,9 @@ class LocadorSerializer(serializers.ModelSerializer):
                                              inscricao_estadual=inscricao_estadual, cnpj=cnpj, endereco=endereco,
                                              telefone=telefone, perfil=perfil)
 
-            return locador
+            serializer = LocadorSerializer(locador)
+            envia_email_bemvindo(serializer.data)
+            return Response(serializer.data, status.HTTP_201_CREATED)
 
         except Exception:
             return Response('Não foi possível efetuar o cadastro.', status.HTTP_400_BAD_REQUEST)

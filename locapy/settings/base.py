@@ -85,7 +85,9 @@ ROOT_URLCONF = 'locapy.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            'apps/email/template'
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -155,3 +157,9 @@ STATIC_URL = '/static/'
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'controlapet@gmail.com'
+EMAIL_HOST_PASSWORD = 'SysControlaPet@2018'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
