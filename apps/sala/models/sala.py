@@ -9,11 +9,12 @@ class Sala(TimeStampedModel):
     capacidade = models.IntegerField(null=False, blank=False)
     logradouro = models.CharField(max_length=100, null=False, blank=False)
     numero = models.IntegerField(null=False, blank=False)
-    bairro = models.CharField(max_length=100,null=True, blank=True)
+    bairro = models.CharField(max_length=100, null=True, blank=True)
     cidade = models.CharField(max_length=100, null=False, blank=False)
     estado = models.CharField(max_length=100, null=False, blank=False)
     complemento = models.CharField(max_length=200, null=True, blank=True)
     cep = models.CharField(max_length=20, null=False, blank=False)
+    descricao = models.CharField(max_length=1000, null=True, blank=True)
     locador = models.ForeignKey(to='locador.Locador', related_name="locador_sala", on_delete=models.CASCADE,
                                 blank=False, null=False)
 
