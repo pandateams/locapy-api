@@ -86,7 +86,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            'apps/email/template'
+            'templates'
         ],
         'APP_DIRS': True,
         'OPTIONS': {

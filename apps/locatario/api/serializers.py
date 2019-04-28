@@ -1,4 +1,5 @@
 from django.core.validators import RegexValidator
+from raven.contrib.django.raven_compat.models import client
 from rest_framework import serializers, status
 from rest_framework.response import Response
 from rest_framework.validators import UniqueValidator
@@ -6,7 +7,6 @@ from rest_framework.validators import UniqueValidator
 from apps.autenticacao.api.serializers import PerfilSerializer
 from apps.autenticacao.models import Perfil
 from apps.autenticacao.models import User
-from apps.email.logica import envia_email_bemvindo
 from apps.locatario.models import Locatario
 
 
@@ -81,4 +81,5 @@ class LocatarioSerializer(serializers.ModelSerializer):
             return locatario
 
         except Exception:
+            client.captureException()
             return Response('Não foi possível efetuar o cadastro.', status.HTTP_400_BAD_REQUEST)

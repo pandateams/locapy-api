@@ -1,10 +1,12 @@
 from django.core.exceptions import ObjectDoesNotExist
+from raven.contrib.django.models import client
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
+from apps.email.logica import envia_email_bemvindo
 from apps.locatario.api.serializers import LocatarioSerializer, LocatarioSerializerSoft
 from apps.locatario.models import Locatario
 
@@ -25,6 +27,23 @@ class LocatarioViewSet(ModelViewSet):
         Locatarios ativos
         """
         return Locatario.objects.filter(ativo=True)
+
+    def create(self, request, *args, **kwargs):
+        """
+        Função que é chamada quando um Locatario está para ser criado
+
+        Returns
+        -------
+        Objeto criado ou um objeto vazio
+        """
+        try:
+            response = super().create(request, *args, **kwargs)
+            serializer = LocatarioSerializer(response.data)
+            envia_email_bemvindo(serializer.data)
+            return Response(serializer.data, status.HTTP_201_CREATED)
+        except Exception:
+            client.captureException()
+            return Response({}, status.HTTP_400_BAD_REQUEST)
 
 
 class LocatarioViewSetSoft(ModelViewSet):
