@@ -1,4 +1,6 @@
+from rest_framework import status
 from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from apps.sala.api.serializers import SalaSerializer, RecursoSerializer, TipoRecursoSerializer, GaleriaSerializer
@@ -21,6 +23,11 @@ class SalaViewset(ModelViewSet):
         Salas
         """
         return Sala.objects.all()
+
+    def create(self, request, *args, **kwargs):
+        response = super().create(request, *args, **kwargs)
+        serializer = SalaSerializer(response.data)
+        return Response(serializer.data, status.HTTP_201_CREATED)
 
 
 class RecursoViewset(ModelViewSet):

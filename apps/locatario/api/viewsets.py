@@ -6,7 +6,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from apps.email.logica import envia_email_bemvindo
+from apps.email.logica import envia_email
 from apps.locatario.api.serializers import LocatarioSerializer, LocatarioSerializerSoft
 from apps.locatario.models import Locatario
 
@@ -36,14 +36,10 @@ class LocatarioViewSet(ModelViewSet):
         -------
         Objeto criado ou um objeto vazio
         """
-        try:
-            response = super().create(request, *args, **kwargs)
-            serializer = LocatarioSerializer(response.data)
-            envia_email_bemvindo(serializer.data)
-            return Response(serializer.data, status.HTTP_201_CREATED)
-        except Exception:
-            client.captureException()
-            return Response({}, status.HTTP_400_BAD_REQUEST)
+        response = super().create(request, *args, **kwargs)
+        serializer = LocatarioSerializer(response.data)
+        envia_email().boas_vindas_locatario(data=serializer.data)
+        return Response(serializer.data, status.HTTP_201_CREATED)
 
 
 class LocatarioViewSetSoft(ModelViewSet):

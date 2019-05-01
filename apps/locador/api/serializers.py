@@ -31,31 +31,27 @@ class LocadorSerializer(serializers.ModelSerializer):
             'perfil')
 
     def create(self, validated_data):
-        try:
-            payload = {
-                'nome_fantasia': validated_data['nome_fantasia'],
-                'razao_social': validated_data['razao_social'],
-                'inscricao_estadual': validated_data['inscricao_estadual'],
-                'cnpj': validated_data['cnpj'],
-                'endereco': validated_data['endereco'],
-                'telefone': validated_data['telefone'],
-                'perfil': validated_data['perfil'],
-                'usuario': validated_data['perfil']['usuario']
-            }
+        payload = {
+            'nome_fantasia': validated_data['nome_fantasia'],
+            'razao_social': validated_data['razao_social'],
+            'inscricao_estadual': validated_data['inscricao_estadual'],
+            'cnpj': validated_data['cnpj'],
+            'endereco': validated_data['endereco'],
+            'telefone': validated_data['telefone'],
+            'perfil': validated_data['perfil'],
+            'usuario': validated_data['perfil']['usuario']
+        }
 
-            user = User.objects.create_user(payload['usuario']['username'], payload['usuario']['email'],
-                                            payload['usuario']['password'])
-            perfil = Perfil.objects.create(usuario=user)
-            locador = Locador.objects.create(nome_fantasia=payload['nome_fantasia'],
-                                             razao_social=payload['razao_social'],
-                                             inscricao_estadual=payload['inscricao_estadual'], cnpj=payload['cnpj'],
-                                             endereco=payload['endereco'],
-                                             telefone=payload['telefone'], perfil=perfil)
+        user = User.objects.create_user(payload['usuario']['username'], payload['usuario']['email'],
+                                        payload['usuario']['password'])
+        perfil = Perfil.objects.create(usuario=user)
+        locador = Locador.objects.create(nome_fantasia=payload['nome_fantasia'],
+                                         razao_social=payload['razao_social'],
+                                         inscricao_estadual=payload['inscricao_estadual'], cnpj=payload['cnpj'],
+                                         endereco=payload['endereco'],
+                                         telefone=payload['telefone'], perfil=perfil)
 
-            return locador
-
-        except Exception:
-            return Response('Não foi possível efetuar o cadastro.', status.HTTP_400_BAD_REQUEST)
+        return locador
 
 
 class LocadorSerializerSoft(serializers.ModelSerializer):
