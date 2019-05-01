@@ -159,7 +159,7 @@ STATIC_URL = '/static/'
 django_heroku.settings(locals())
 
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'controlapet@gmail.com'
-EMAIL_HOST_PASSWORD = 'SysControlaPet@2018'
+EMAIL_HOST_USER = config('EMAIL_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
