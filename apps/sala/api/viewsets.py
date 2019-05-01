@@ -1,3 +1,4 @@
+from raven.contrib.django.models import client
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -25,9 +26,20 @@ class SalaViewset(ModelViewSet):
         return Sala.objects.all()
 
     def create(self, request, *args, **kwargs):
-        response = super().create(request, *args, **kwargs)
-        serializer = SalaSerializer(response.data)
-        return Response(serializer.data, status.HTTP_201_CREATED)
+        """
+        Função que é chamada quando uma Sala está para ser criada
+
+        Returns
+        -------
+        Objeto criado ou um objeto vazio
+        """
+        serializer = SalaSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status.HTTP_201_CREATED)
+        else:
+            client.captureException()
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class RecursoViewset(ModelViewSet):

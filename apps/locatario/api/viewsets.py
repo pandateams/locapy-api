@@ -36,10 +36,14 @@ class LocatarioViewSet(ModelViewSet):
         -------
         Objeto criado ou um objeto vazio
         """
-        response = super().create(request, *args, **kwargs)
-        serializer = LocatarioSerializer(response.data)
-        envia_email().boas_vindas_locatario(data=serializer.data)
-        return Response(serializer.data, status.HTTP_201_CREATED)
+        serializer = LocatarioSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            envia_email().boas_vindas_locatario(data=serializer.data)
+            return Response(serializer.data, status.HTTP_201_CREATED)
+        else:
+            client.captureException()
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class LocatarioViewSetSoft(ModelViewSet):
