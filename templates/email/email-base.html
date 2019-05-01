@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml">
+{% load static %}
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Locapy</title>
+</head>
+<body style="margin: 0; padding: 0;">
+  <div style="margin:0;background-color:#f2f0f8">
+    <table align="center" border="0" cellpadding="0" cellspacing="0">
+      <tbody>
+        <!-- MENU -->
+        <tr>
+          <td align="center">
+            <span style="
+            display:inline-block;
+            width:49.5%;
+            text-align:center">
+              <a style="
+              font-family:'Nunito Sans','Helvetica Neue',Calibre,Helvetica,Arial,sans-serif;
+              font-size:13px;
+              line-height:24px;
+              color:#68627a;
+              text-decoration:underline" href="#">Visite nosso site</a>
+            </span>
+          </td>
+        </tr>
+        <!-- TITULO -->
+        <tr>
+          <td align="center" bgcolor="#1B325F" style="
+          font-family: 'Nunito Sans','Helvetica Neue',Calibre,Helvetica,Arial,sans-serif;
+          font-size: 20px;
+          line-height: 24px;
+          color: #2b2f45;
+          padding: 16px 0 16px 0;">
+            <a href="#" style="
+            cursor: pointer;
+            text-decoration: underline;">
+              <span style="
+              display:inline-block;
+              width:49.5%;
+              text-align:center;
+              color:#fff">
+                  LOCAPY
+              </span>
+            </a>
+          </td>
+        </tr>
+        <!-- CONTEUDO -->
+        <tr>
+          <td align="center" bgcolor="#E9F2F9" style="padding: 0px 0px 0px 0px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+              <tbody>
+                <tr>
+                  <!-- LATERAL -->
+                  <td bgcolor="#F2F0F8"></td>
+                  <!-- CONTEUDO MEIO -->
+                  <td align="center" bgcolor="#F2F0F8" style="padding:0px 0px 0px 0px" width="600">
+                		{% block content_base %}
+                    <!--===INSIRA AQUI SEU CONTEUDO===-->
+
+
+                		<!--===FIMM===-->
+                		{% endblock %}
+                  </td>
+                  <!-- LATERAL -->
+                  <td bgcolor="#F2F0F8"></td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <td height="32"></td>
+        <!-- FOOTER -->
+        <tr bgcolor="#1B325F">
+          <td align="center" width="40%">
+           <table border="0" cellpadding="0" cellspacing="0" style="padding:16px 0px 0px 0px">
+             <tbody>
+               <tr>
+                 <td align="center" style="
+                 font-family:'Nunito Sans','Helvetica Neue',Calibre,Helvetica,Arial,sans-serif;
+                 font-size:13px;
+                 line-height:24px;
+                 color:#ffffff;
+                 padding:0px 0px 10px 0px">
+                 <small>Locapy © 2019 Todos Diretos reservados. Termos e Uso e Política de Privacidade</small>
+               </td>
+               </tr>
+             </tbody>
+           </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
