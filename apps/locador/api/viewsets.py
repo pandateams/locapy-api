@@ -46,6 +46,20 @@ class LocadorViewSet(ModelViewSet):
             client.captureException()
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def update(self, request, *args, **kwargs):
+        """
+        Função que é chamada quando um Locador é atualizado
+
+        """
+        return Response('', status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, *args, **kwargs):
+        """
+        Função que é chamada quando um Locador é deletado
+
+        """
+        return Response('', status=status.HTTP_400_BAD_REQUEST)
+
 
 class LocadorViewSetSoft(ModelViewSet):
     """

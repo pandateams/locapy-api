@@ -1,6 +1,5 @@
 from django.core.validators import RegexValidator
-from rest_framework import serializers, status
-from rest_framework.response import Response
+from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
 from apps.autenticacao.api.serializers import PerfilSerializer
@@ -32,13 +31,13 @@ class LocadorSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         payload = {
-            'nome_fantasia': validated_data['nome_fantasia'],
-            'razao_social': validated_data['razao_social'],
-            'inscricao_estadual': validated_data['inscricao_estadual'],
-            'cnpj': validated_data['cnpj'],
-            'endereco': validated_data['endereco'],
-            'telefone': validated_data['telefone'],
-            'perfil': validated_data['perfil'],
+            'nome_fantasia': validated_data.get('nome_fantasia', None),
+            'razao_social': validated_data.get('razao_social', None),
+            'inscricao_estadual': validated_data.get('inscricao_estadual', None),
+            'cnpj': validated_data.get('cnpj'),
+            'endereco': validated_data.get('endereco', None),
+            'telefone': validated_data.get('telefone', None),
+            'perfil': validated_data.get('perfil'),
             'usuario': validated_data['perfil']['usuario']
         }
 
