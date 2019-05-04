@@ -25,14 +25,5 @@ class EnviaEmail:
                          fail_silently=False)
         return mail
 
-    # def sala_cadastrada(self, data):
-    #     destinatario = [data['perfil']['usuario']['email'], ]
-    #     plain_text = f"Olá!! Parabens você está cadastrado no nosso melhor portal de aluguel de salas comerciais do Brasil"
-    #     html_email = render_to_string('email/bem-vindo-locatario.html', context=data)
-    #     assunto = 'Bem vindo ao Locapy!'
-    #     mail = send_mail(assunto, plain_text, self.remetente, destinatario, html_message=html_email,
-    #                      fail_silently=False)
-    #     return mail
-
 
 envia_email = EnviaEmail
