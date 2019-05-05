@@ -1,11 +1,9 @@
 from django.core.validators import RegexValidator
-from rest_framework import serializers, status
-from rest_framework.response import Response
+from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
 from apps.autenticacao.api.serializers import PerfilSerializer
-from apps.autenticacao.models import Perfil
-from apps.autenticacao.models import User
+from apps.autenticacao.models import User, Perfil
 from apps.locador.models import Locador
 
 
@@ -20,7 +18,8 @@ class LocadorSerializer(serializers.ModelSerializer):
         allow_blank=False,
         validators=[
             UniqueValidator(queryset=Locador.objects.all()),
-            RegexValidator(regex="([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})")
+            RegexValidator(
+                regex="([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})")
         ]
     )
 
@@ -31,31 +30,30 @@ class LocadorSerializer(serializers.ModelSerializer):
             'perfil')
 
     def create(self, validated_data):
-        try:
-            nome_fantasia = validated_data['nome_fantasia']
-            razao_social = validated_data['razao_social']
-            inscricao_estadual = validated_data['inscricao_estadual']
-            cnpj = validated_data['cnpj']
-            endereco = validated_data['endereco']
-            telefone = validated_data['telefone']
-            perfil = validated_data['perfil']
+        payload = {
+            'nome_fantasia': validated_data.get('nome_fantasia', None),
+            'razao_social': validated_data.get('razao_social', None),
+            'inscricao_estadual': validated_data.get('inscricao_estadual', None),
+            'cnpj': validated_data.get('cnpj'),
+            'endereco': validated_data.get('endereco', None),
+            'telefone': validated_data.get('telefone', None),
+            'perfil': validated_data.get('perfil'),
+            'usuario': validated_data['perfil']['usuario']
+        }
 
-            usuario = perfil['usuario']
+        user = User.objects.create_user(payload['usuario']['username'], payload['usuario']['email'],
+                                        payload['usuario']['password'])
+        perfil = Perfil.objects.create(usuario=user)
+        locador = Locador.objects.create(nome_fantasia=payload['nome_fantasia'],
+                                         razao_social=payload['razao_social'],
+                                         inscricao_estadual=payload['inscricao_estadual'], cnpj=payload['cnpj'],
+                                         endereco=payload['endereco'],
+                                         telefone=payload['telefone'], perfil=perfil)
 
-            user = User.objects.create_user(usuario['username'], usuario['email'], usuario['password'])
-            perfil = Perfil.objects.create(usuario=user)
-            locador = Locador.objects.create(nome_fantasia=nome_fantasia, razao_social=razao_social,
-                                             inscricao_estadual=inscricao_estadual, cnpj=cnpj, endereco=endereco,
-                                             telefone=telefone, perfil=perfil)
-
-            return locador
-
-        except Exception:
-            return Response('Não foi possível efetuar o cadastro.', status.HTTP_400_BAD_REQUEST)
+        return locador
 
 
 class LocadorSerializerSoft(serializers.ModelSerializer):
-
     cnpj = serializers.RegexField(
         regex="([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})",
         required=True,
@@ -64,7 +62,8 @@ class LocadorSerializerSoft(serializers.ModelSerializer):
         allow_blank=False,
         validators=[
             UniqueValidator(queryset=Locador.objects.all()),
-            RegexValidator(regex="([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})")
+            RegexValidator(
+                regex="([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})")
         ]
     )
 

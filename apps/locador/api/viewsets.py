@@ -1,10 +1,12 @@
 from django.core.exceptions import ObjectDoesNotExist
+from raven.contrib.django.raven_compat.models import client
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
+from apps.email.logica import envia_email
 from apps.locador.api.serializers import LocadorSerializer, LocadorSerializerSoft
 from apps.locador.models import Locador
 
@@ -26,6 +28,37 @@ class LocadorViewSet(ModelViewSet):
         """
 
         return Locador.objects.filter(perfil__bloqueado=False)
+
+    def create(self, request, *args, **kwargs):
+        """
+        Função que é chamada quando um Locador está para ser criado
+
+        Returns
+        -------
+        Objeto criado ou um objeto vazio
+        """
+        serializer = LocadorSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            envia_email().boas_vindas_locador(data=serializer.data)
+            return Response(serializer.data, status.HTTP_201_CREATED)
+        else:
+            client.captureException()
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def update(self, request, *args, **kwargs):
+        """
+        Função que é chamada quando um Locador é atualizado
+
+        """
+        return Response('', status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, *args, **kwargs):
+        """
+        Função que é chamada quando um Locador é deletado
+
+        """
+        return Response('', status=status.HTTP_400_BAD_REQUEST)
 
 
 class LocadorViewSetSoft(ModelViewSet):
@@ -67,4 +100,5 @@ class LocadorViewSetSoft(ModelViewSet):
         except ObjectDoesNotExist:
             return Response({}, status.HTTP_404_NOT_FOUND)
         except Exception:
+            client.captureException()
             return Response({}, status.HTTP_400_BAD_REQUEST)

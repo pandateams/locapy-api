@@ -9,7 +9,7 @@ class SalaSerializer(serializers.ModelSerializer):
         model = Sala
         fields = (
             'id', 'nome', 'metragem', 'capacidade', 'logradouro', 'numero', 'bairro',
-            'cidade', 'estado', 'complemento', 'cep', 'locador'
+            'cidade', 'estado', 'complemento', 'cep', 'descricao', 'locador'
         )
 
 
