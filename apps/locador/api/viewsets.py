@@ -9,6 +9,7 @@ from rest_framework.viewsets import ModelViewSet
 from apps.email.logica import envia_email
 from apps.locador.api.serializers import LocadorSerializer, LocadorSerializerSoft
 from apps.locador.models import Locador
+from apps.locador.tasks import envia_email_boas_vindas_locador_task
 
 
 class LocadorViewSet(ModelViewSet):
@@ -40,10 +41,9 @@ class LocadorViewSet(ModelViewSet):
         serializer = LocadorSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            envia_email().boas_vindas_locador(data=serializer.data)
+            envia_email_boas_vindas_locador_task.delay(data=serializer.data)
             return Response(serializer.data, status.HTTP_201_CREATED)
         else:
-            client.captureException()
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, *args, **kwargs):

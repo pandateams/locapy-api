@@ -67,18 +67,41 @@ class CriaLocadoresCompletoTest(TestCase):
     """ Módulo de teste que cria locadores"""
 
     def setUp(self):
-        self.valid_payload = {
-            "nome_fantasia": "Teste",
-            "cnpj": "74701991000176",
-            "perfil": {
-                "usuario": {
-                    "username": "user_teste",
-                    "email": "teste@gmail.com",
-                    "password": "Teste123"
+        self.valid_payloads = [
+            {
+                "nome_fantasia": "Tony Stark",
+                "cnpj": "74701991000176",
+                "perfil": {
+                    "usuario": {
+                        "username": "tony",
+                        "email": "tony@gmail.com",
+                        "password": "Teste123"
+                    }
+                }
+            },
+            {
+                "nome_fantasia": "Steve Rogers",
+                "cnpj": "74701991000177",
+                "perfil": {
+                    "usuario": {
+                        "username": "steve",
+                        "email": "steve@hotmail.com",
+                        "password": "Teste123"
+                    }
+                }
+            },
+            {
+                "nome_fantasia": "Bruce Banner",
+                "cnpj": "74701991000178",
+                "perfil": {
+                    "usuario": {
+                        "username": "bruce",
+                        "email": "bruce@gmail.com",
+                        "password": "Teste123"
+                    }
                 }
             }
-        }
-
+        ]
         self.invalid_cnpj_payload = {
             "nome_fantasia": "Teste",
             "cnpj": "7491000176",
@@ -92,12 +115,13 @@ class CriaLocadoresCompletoTest(TestCase):
         }
 
     def test_cria_locador_valido(self):
-        response = client.post(
-            '/cadastro/locador/',
-            data=json.dumps(self.valid_payload),
-            content_type='application/json'
-        )
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        for payload in self.valid_payloads:
+            response = client.post(
+                '/cadastro/locador/',
+                data=json.dumps(payload),
+                content_type='application/json'
+            )
+            self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_cria_locador_cnpj_invalido(self):
         response = client.post(
