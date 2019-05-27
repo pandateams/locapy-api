@@ -1,2 +1,3 @@
 web: gunicorn locapy.wsgi --log-file -
-worker: python manage.py celery worker -B -l info
+worker: celery -A locapy worker -l INFO
+beat: celery -A locapy beat --pidfile=/tmp/celery-beat.pid -l INFO

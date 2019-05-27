@@ -6,3 +6,6 @@ docker-clean:
 
 container-createsuperuser:
 	sudo docker exec -it locapy_api bash -c "python manage.py createsuperuser"
+
+test:
+    python manage.py test
