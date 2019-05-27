@@ -1,6 +1,7 @@
 import json
 
 from django.test import Client, TestCase
+from mock import patch
 from rest_framework import status
 
 from apps.autenticacao.models import Perfil, User
@@ -114,7 +115,8 @@ class CriaLocadoresCompletoTest(TestCase):
             }
         }
 
-    def test_cria_locador_valido(self):
+    @patch('apps.locador.api.viewsets.envia_email_boas_vindas_locador_task')
+    def test_cria_locador_valido(self, mocked_task):
         for payload in self.valid_payloads:
             response = client.post(
                 '/cadastro/locador/',
@@ -123,7 +125,8 @@ class CriaLocadoresCompletoTest(TestCase):
             )
             self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-    def test_cria_locador_cnpj_invalido(self):
+    @patch('apps.locador.api.viewsets.envia_email_boas_vindas_locador_task')
+    def test_cria_locador_cnpj_invalido(self, mocked_task):
         response = client.post(
             '/cadastro/locador/',
             data=json.dumps(self.invalid_cnpj_payload),
