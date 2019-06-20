@@ -2,11 +2,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from raven.contrib.django.raven_compat.models import client
 from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from apps.email.logica import envia_email
 from apps.locador.api.serializers import LocadorSerializer, LocadorSerializerSoft
 from apps.locador.models import Locador
 from apps.locador.tasks import envia_email_boas_vindas_locador_task
@@ -17,7 +16,7 @@ class LocadorViewSet(ModelViewSet):
     Viewset mais completa responsavel pelo locador
     """
     serializer_class = LocadorSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         """
@@ -66,7 +65,7 @@ class LocadorViewSetSoft(ModelViewSet):
     Viewset mais simples responsavel pelo locador
     """
     serializer_class = LocadorSerializerSoft
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         """

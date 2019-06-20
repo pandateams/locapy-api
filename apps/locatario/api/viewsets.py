@@ -1,7 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
@@ -15,7 +15,7 @@ class LocatarioViewSet(ModelViewSet):
     Viewset responsavel pelo Locatario
     """
     serializer_class = LocatarioSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         """
@@ -49,7 +49,7 @@ class LocatarioViewSetSoft(ModelViewSet):
     Viewset responsavel pelo Locatario
     """
     serializer_class = LocatarioSerializerSoft
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         """

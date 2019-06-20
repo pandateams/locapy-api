@@ -43,11 +43,13 @@ REQUIREMENTS_APPS = [
     'django.contrib.staticfiles',
     # Apps de terceiros
     'rest_framework',
+    'rest_framework.authtoken',
     'django_filters',
     'cloudinary',
     'raven.contrib.django.raven_compat',
     'django_extensions',
     'corsheaders',
+
 ]
 
 PROJECT_APPS = [

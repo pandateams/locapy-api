@@ -1,7 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
@@ -78,7 +78,7 @@ class PerfilViewSet(ModelViewSet):
     Viewset responsavel pelo perfil dos usuarios
     """
     serializer_class = PerfilSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         """
@@ -96,7 +96,7 @@ class PerfilViewSetSoft(ModelViewSet):
     Viewset responsavel pelo perfil dos usuarios com apenas informações do perfil
     """
     serializer_class = PerfilSerializerSoft
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         """

@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
+from rest_framework.authtoken.views import obtain_auth_token
 
 from apps.autenticacao.api.viewsets import UserViewSet, PerfilViewSetSoft, PerfilViewSet
 from apps.locador.api.viewsets import LocadorViewSet, LocadorViewSetSoft
@@ -41,4 +42,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('auth/token/', obtain_auth_token)
 ]
