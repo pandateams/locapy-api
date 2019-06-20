@@ -1,5 +1,6 @@
 from dj_database_url import parse as dburl
 
+from locapy.celery import app
 from .base import *
 
 DEBUG = True
@@ -18,3 +19,7 @@ RAVEN_CONFIG = {
     'dsn': config('SENTRY_DSN'),
     'environment': 'dev',
 }
+
+BROKER_URL = config('BROKER_URL')
+
+app.conf.update(BROKER_URL=config('BROKER_URL'))
