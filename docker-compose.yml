@@ -20,6 +20,7 @@ services:
     depends_on:
       - migration
       - postgres
+      - rabbitmq
 
   collectstatic:
     container_name: collectstatic
@@ -36,6 +37,7 @@ services:
       - locapy_api
     depends_on:
       - postgres
+      - migration
 
   migration:
     container_name: migration
@@ -52,6 +54,43 @@ services:
       - locapy_api
     depends_on:
       - postgres
+      - rabbitmq
+
+  celery-worker:
+    container_name: celery-worker
+    image: locapy_api:develop
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+      args:
+        requirements: dev
+    command: celery -A locapy worker -l INFO
+    volumes:
+      - .:/app
+    networks:
+      - locapy_api
+    depends_on:
+      - postgres
+      - rabbitmq
+      - migration
+
+  celery-beat:
+    container_name: celery-beat
+    image: locapy_api:develop
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+      args:
+        requirements: dev
+    command: celery -A locapy beat --pidfile=/tmp/celery-beat.pid -l INFO
+    volumes:
+      - .:/app
+    networks:
+      - locapy_api
+    depends_on:
+      - postgres
+      - rabbitmq
+      - migration
 
   postgres:
     container_name: postgres
@@ -64,6 +103,17 @@ services:
       - .:/app
     ports:
       - 5432:5432
+    networks:
+      - locapy_api
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3.7.14
+    volumes:
+      - ./var/locapy/rabbitmq:/var/lib/rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
     networks:
       - locapy_api
 

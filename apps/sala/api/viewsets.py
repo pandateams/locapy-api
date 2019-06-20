@@ -38,7 +38,6 @@ class SalaViewset(ModelViewSet):
             serializer.save()
             return Response(serializer.data, status.HTTP_201_CREATED)
         else:
-            client.captureException()
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

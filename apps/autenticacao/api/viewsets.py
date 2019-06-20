@@ -107,3 +107,4 @@ class PerfilViewSetSoft(ModelViewSet):
         Lista de perfis de usuario
         """
         return Perfil.objects.all()
+

@@ -1,12 +1,11 @@
 from django.core.exceptions import ObjectDoesNotExist
-from raven.contrib.django.models import client
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from apps.email.logica import envia_email
+from apps.locatario.tasks import envia_email_boas_vindas_locatario_task
 from apps.locatario.api.serializers import LocatarioSerializer, LocatarioSerializerSoft
 from apps.locatario.models import Locatario
 
@@ -39,10 +38,9 @@ class LocatarioViewSet(ModelViewSet):
         serializer = LocatarioSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            envia_email().boas_vindas_locatario(data=serializer.data)
+            envia_email_boas_vindas_locatario_task(data=serializer.data)
             return Response(serializer.data, status.HTTP_201_CREATED)
         else:
-            client.captureException()
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
