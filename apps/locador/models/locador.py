@@ -36,7 +36,8 @@ class Locador(TimeStampedModel):
     telefone = models.CharField(max_length=11, blank=True, null=True)
     perfil = models.ForeignKey(to='autenticacao.Perfil', related_name="perfil_locador", on_delete=models.CASCADE,
                                blank=False, null=False)
-    # TODO Fazer relacionamento com o model de plano
+    plano = models.ForeignKey(to='autenticacao.Plano', related_name='plano_locador', on_delete=models.DO_NOTHING,
+                              blank=False, null=False)
 
     class Meta:
         app_label = 'locador'
