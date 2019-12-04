@@ -5,7 +5,7 @@ certifi==2019.3.9
 cloudinary==1.15.0
 codegen==1.0
 dj-database-url==0.5.0
-Django==2.2.2
+Django==2.2.8
 django-cors-headers==2.5.2
 django-extensions==2.1.6
 django-filter==2.1.0
